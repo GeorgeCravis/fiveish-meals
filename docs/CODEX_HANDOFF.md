@@ -117,7 +117,7 @@ C:\5分料理Plus\data\source\
 
 短期：
 
-1. 将 `frontend/prototype/index.html` 作为静态 PWA 发布到 GitHub Pages。
+1. 将 `frontend/prototype/index.html` 作为静态 PWA 发布到阿里云 OSS。
 2. 同步复制 `manifest.webmanifest` 和 `assets/icons/`。
 3. Pages 入口可以先直接指向 `frontend/prototype/`。
 

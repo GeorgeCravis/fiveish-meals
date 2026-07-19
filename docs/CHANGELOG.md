@@ -495,6 +495,10 @@ Files changed:
 - `frontend/prototype/index.html`
 - `frontend/prototype/version.json`
 - `docs/CHANGELOG.md`
+- `.github/workflows/deploy-aliyun-oss.yml`
+- `docs/ALIYUN_DEPLOY.md`
+- `docs/CODEX_HANDOFF.md`
+- `START_HERE.md`
 
 Behavior changes:
 
@@ -503,4 +507,5 @@ Behavior changes:
 - Added card-style rendering for the menu-library combo contents.
 - Hid guide step 0 when there is nothing to prep or thaw.
 - Kept steps 1-3 in order but removed any empty appliance step instead of showing a blank step.
+- Switched the deployment workflow from GitHub Pages to Alibaba Cloud OSS.
 

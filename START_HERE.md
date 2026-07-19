@@ -35,7 +35,7 @@
 ## 后续 Codex 的第一句话建议
 
 ```text
-请以 C:\5分料理Plus 为工作目录，先阅读 START_HERE.md 和 docs/CODEX_HANDOFF.md，然后继续把 frontend/prototype/index.html 工程化为 PWA，并准备 GitHub Pages 发布。
+请以 C:\5分料理Plus 为工作目录，先阅读 START_HERE.md 和 docs/CODEX_HANDOFF.md，然后继续把 frontend/prototype/index.html 工程化为 PWA，并准备阿里云 OSS 发布。
 ```
 
 ## 关键规则
