@@ -1,0 +1,26 @@
+{
+  "name": "5\u5206\u6599\u7406",
+  "short_name": "5\u5206\u6599\u7406",
+  "description": "\u82b15\u5206\u949f\u65f6\u95f4\uff0c\u505a\u53ea\u503c5\u5206\u7684\u6599\u7406\u3002",
+  "lang": "zh-CN",
+  "start_url": "./version-claude.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8d7",
+  "theme_color": "#ff6b00",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/icons/fiveish-meals-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/fiveish-meals-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ff6b00" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png" />
+  <title>5分料理 · 三版风格对比</title>
+  <style>
+    :root {
+      --bg: #f7f2ea;
+      --surface: #fffaf3;
+      --ink: #211915;
+      --muted: #74675f;
+      --line: #ded3c7;
+      --claude: #cc785c;
+      --bmw: #1c69d4;
+      --energetic: #ff6b2d;
+      --radius: 22px;
+      --shadow: 0 24px 80px rgba(33, 25, 21, .12);
+      --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", system-ui, sans-serif;
+      --font-display: "Iowan Old Style", "Charter", Georgia, "Songti SC", serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      min-width: 0;
+      background:
+        linear-gradient(90deg, rgba(33, 25, 21, .035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255, 250, 243, .92) 0%, rgba(244, 236, 225, .9) 100%),
+        linear-gradient(180deg, #fbf7ef 0%, #f4ece1 100%);
+      background-size: 28px 28px, auto, auto;
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+
+    .shell {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: clamp(36px, 7vw, 92px) 0 32px;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: clamp(40px, 7vw, 84px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 250, 243, .82);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, .7) inset;
+      color: var(--claude);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 250, 243, .7);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      gap: clamp(24px, 5vw, 64px);
+      align-items: end;
+    }
+
+    .eyebrow {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 820px;
+      margin-top: 14px;
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 104px);
+      line-height: .94;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+    }
+
+    .decision-card {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255, 250, 243, .78);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .decision-card h2 {
+      font-size: 22px;
+      line-height: 1.15;
+    }
+
+    .decision-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .quick-points {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .quick-points span {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 6px;
+      border-radius: 999px;
+      background: var(--claude);
+    }
+
+    main {
+      padding: 24px 0 clamp(48px, 8vw, 96px);
+    }
+
+    .version-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .version-card {
+      display: grid;
+      grid-template-rows: auto minmax(360px, 48vh) auto;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: rgba(255, 250, 243, .86);
+      box-shadow: 0 16px 50px rgba(33, 25, 21, .08);
+    }
+
+    .version-head {
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .version-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .version-title {
+      margin-top: 12px;
+      font-size: 26px;
+      line-height: 1.08;
+    }
+
+    .version-desc {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .swatch-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(33, 25, 21, .16);
+      border-radius: 999px;
+    }
+
+    .preview {
+      position: relative;
+      overflow: hidden;
+      background: #f0e7dc;
+    }
+
+    .preview iframe {
+      width: 1440px;
+      height: 1020px;
+      border: 0;
+      transform: scale(.34);
+      transform-origin: 0 0;
+      pointer-events: none;
+    }
+
+    .preview::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 1px rgba(33, 25, 21, .08);
+    }
+
+    .version-foot {
+      display: grid;
+      gap: 16px;
+      padding: 20px 22px 22px;
+      border-top: 1px solid var(--line);
+    }
+
+    .fit {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .fit b {
+      color: var(--ink);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      padding: 10px 16px;
+      background: var(--ink);
+      color: #fffaf3;
+      font-weight: 800;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: #3a2c25;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface);
+    }
+
+    .claude .accent { color: var(--claude); }
+    .bmw .accent { color: var(--bmw); }
+    .energetic .accent { color: var(--energetic); }
+    .claude .version-card-marker { background: var(--claude); }
+    .bmw .version-card-marker { background: var(--bmw); }
+    .energetic .version-card-marker { background: var(--energetic); }
+
+    .version-card-marker {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      box-shadow: 0 0 0 5px rgba(33, 25, 21, .06);
+      flex: 0 0 auto;
+    }
+
+    .matrix {
+      margin-top: 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(255, 250, 243, .76);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th, td {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    footer {
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .version-grid {
+        grid-template-columns: 1fr;
+      }
+      .version-card {
+        grid-template-rows: auto 430px auto;
+      }
+      .preview iframe {
+        transform: scale(.42);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .shell { width: calc(100% - 28px); }
+      .topline { align-items: flex-start; flex-direction: column; }
+      .decision-card { padding: 18px; }
+      .version-card {
+        border-radius: 18px;
+        grid-template-rows: auto 360px auto;
+      }
+      .preview iframe {
+        transform: scale(.31);
+      }
+      .actions { display: grid; }
+      .btn { width: 100%; }
+      .matrix { overflow-x: auto; }
+      table { min-width: 720px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="shell">
+      <div class="topline">
+        <a class="brand" href="./index.html" aria-label="5分料理版本对比首页">
+          <span class="mark" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 14c-3-4 4-6 1-10M34 14c-3-4 4-6 1-10M47 14c-3-4 4-6 1-10" />
+              <path d="M12 27h40l-4 27H16L12 27Z" />
+              <path d="M18 27v-7h28v7" />
+              <path d="M24 40h16" />
+              <path d="M23 48c3 3 15 3 18 0" />
+            </svg>
+          </span>
+          <span>5分料理</span>
+        </a>
+        <span class="badge">Three visual directions</span>
+      </div>
+
+      <section class="hero" aria-labelledby="pageTitle">
+        <div>
+          <p class="eyebrow">Fiveish Meals / fiveish-meals</p>
+          <h1 id="pageTitle">三个版本放在一起看，选产品气质。</h1>
+          <p class="lead">同一套 PWA 功能流：首页选择、抽卡、汇总、做菜指引、5 分钟计时器、菜谱库和安装入口。差异只在视觉系统与品牌语气。</p>
+        </div>
+        <aside class="decision-card">
+          <h2>快速判断</h2>
+          <p>如果目标是先做出有记忆点的独立产品，优先看活泼版；如果想更像成熟健康工具，Claude 版更稳；BMW 版适合做风格实验。</p>
+          <div class="quick-points">
+            <span><i class="dot" aria-hidden="true"></i><span>Claude：温暖、克制、像认真写给自己的健康助手。</span></span>
+            <span><i class="dot" style="background: var(--bmw)" aria-hidden="true"></i><span>BMW：冷峻、高级、强品牌姿态，但幽默感更少。</span></span>
+            <span><i class="dot" style="background: var(--energetic)" aria-hidden="true"></i><span>活泼：最贴合“低分传说卡”，传播性最好。</span></span>
+          </div>
+        </aside>
+      </section>
+    </div>
+  </header>
+
+  <main>
+    <div class="shell">
+      <section class="version-grid" aria-label="三个设计版本">
+        <article class="version-card claude">
+          <div class="version-head">
+            <div class="version-kicker"><span>Version A</span><i class="version-card-marker" aria-hidden="true"></i></div>
+            <h2 class="version-title">Claude 风格</h2>
+            <p class="version-desc">温暖纸面、柔和分隔、琥珀行动色。把搞笑包进一个认真、可信、低噪声的健康工具里。</p>
+            <div class="swatch-row" aria-label="Claude 版色板">
+              <span class="swatch" style="background:#fbf7ef"></span>
+              <span class="swatch" style="background:#fffdf8"></span>
+              <span class="swatch" style="background:#cc785c"></span>
+              <span class="swatch" style="background:#2e241f"></span>
+            </div>
+          </div>
+          <div class="preview" aria-hidden="true">
+            <iframe src="./version-claude.html" title="Claude 风格预览" loading="lazy"></iframe>
+          </div>
+          <div class="version-foot">
+            <div class="fit">
+              <span><b>适合：</b>真正准备长期做 PWA、想保留轻吐槽但不显得玩票。</span>
+              <span><b>风险：</b>抽卡的荒诞感会更克制，需要靠文案和动效补记忆点。</span>
+            </div>
+            <div class="actions">
+              <a class="btn" href="./version-claude.html">打开 Claude 版</a>
+              <a class="btn btn-secondary" href="./version-claude.html#draw">看抽卡</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="version-card bmw">
+          <div class="version-head">
+            <div class="version-kicker"><span>Version B</span><i class="version-card-marker" aria-hidden="true"></i></div>
+            <h2 class="version-title">BMW 风格</h2>
+            <p class="version-desc">深色首屏、白色内容区、锐利零圆角、BMW Blue 交互。像高端配置器在认真安排明天吃什么。</p>
+            <div class="swatch-row" aria-label="BMW 版色板">
+              <span class="swatch" style="background:#ffffff"></span>
+              <span class="swatch" style="background:#262626"></span>
+              <span class="swatch" style="background:#1c69d4"></span>
+              <span class="swatch" style="background:#e0e0e0"></span>
+            </div>
+          </div>
+          <div class="preview" aria-hidden="true">
+            <iframe src="./version-bmw.html" title="BMW 风格预览" loading="lazy"></iframe>
+          </div>
+          <div class="version-foot">
+            <div class="fit">
+              <span><b>适合：</b>做视觉实验、验证“反差感”：豪华系统装一个 5 分料理产品。</span>
+              <span><b>风险：</b>高级感会压住食物的亲近感，和电饭煲 icon 的喜感不完全同频。</span>
+            </div>
+            <div class="actions">
+              <a class="btn" href="./version-bmw.html">打开 BMW 版</a>
+              <a class="btn btn-secondary" href="./version-bmw.html#draw">看抽卡</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="version-card energetic">
+          <div class="version-head">
+            <div class="version-kicker"><span>Version C</span><i class="version-card-marker" aria-hidden="true"></i></div>
+            <h2 class="version-title">活泼厚边框版</h2>
+            <p class="version-desc">奶油底、橙色按钮、厚边框硬投影、夸张弹跳。最像“抽中低分传说卡”的原始产品方向。</p>
+            <div class="swatch-row" aria-label="活泼版色板">
+              <span class="swatch" style="background:#fff6df"></span>
+              <span class="swatch" style="background:#ffe9b8"></span>
+              <span class="swatch" style="background:#ff6b2d"></span>
+              <span class="swatch" style="background:#241811"></span>
+            </div>
+          </div>
+          <div class="preview" aria-hidden="true">
+            <iframe src="./version-energetic.html" title="活泼厚边框版预览" loading="lazy"></iframe>
+          </div>
+          <div class="version-foot">
+            <div class="fit">
+              <span><b>适合：</b>独立 PWA 第一版、社交传播、把“5 分但有用”的荒诞感打出来。</span>
+              <span><b>风险：</b>如果后续要做严肃营养管理，需要再收敛一点信息密度和视觉噪声。</span>
+            </div>
+            <div class="actions">
+              <a class="btn" href="./version-energetic.html">打开活泼版</a>
+              <a class="btn btn-secondary" href="./version-energetic.html#draw">看抽卡</a>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="matrix" aria-label="版本对比矩阵">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>Claude 风格</th>
+              <th>BMW 风格</th>
+              <th>活泼厚边框版</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>产品气质</td>
+              <td>温暖、可信、轻幽默</td>
+              <td>冷峻、高级、强反差</td>
+              <td>好玩、直接、有记忆点</td>
+            </tr>
+            <tr>
+              <td>与「5分料理」匹配度</td>
+              <td>高：适合长期使用</td>
+              <td>中：更像视觉实验</td>
+              <td>最高：最贴合抽卡和轻吐槽</td>
+            </tr>
+            <tr>
+              <td>抽卡表现</td>
+              <td>克制弹跳，像助手给建议</td>
+              <td>配置器式舞台，荒诞感较弱</td>
+              <td>夸张弹跳，低分传说感最强</td>
+            </tr>
+            <tr>
+              <td>建议用途</td>
+              <td>可作为正式 PWA 主方向</td>
+              <td>适合做品牌反差展示页</td>
+              <td>适合 MVP、传播和早期用户测试</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">建议先用活泼版验证“抽卡快乐”，再把 Claude 版作为后续收敛到长期使用的方向。</div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Local/private credentials
+Image-gen-apikey.txt
+Image-gen-url.txt
+*apikey*.txt
+*.env
+.env*
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Dependency/build output
+node_modules/
+dist/
+build/
+.cache/
+output/

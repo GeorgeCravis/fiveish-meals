@@ -1,0 +1,5 @@
+﻿{
+    "version":  "2026.07.19.3",
+    "releasedAt":  "2026-07-19T11:40:00+08:00",
+    "notes":  "Keeps leftovers entry on the home screen only, simplifies recipe library labels, and makes recipe cards toggle enable/disable on click."
+}
