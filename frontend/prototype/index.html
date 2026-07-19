@@ -2503,6 +2503,86 @@
       perspective: 1200px;
     }
 
+    .menu-library-card {
+      display: grid;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      min-height: 100%;
+    }
+
+    .menu-library-head {
+      display: grid;
+      gap: 4px;
+    }
+
+    .menu-library-head h3 {
+      margin: 0;
+      font-size: clamp(17px, 2.6vw, 24px);
+      line-height: 1.08;
+    }
+
+    .menu-library-source {
+      color: var(--muted);
+      font-size: var(--text-sm);
+      font-weight: 600;
+      letter-spacing: 0;
+    }
+
+    .menu-library-dishes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));
+      gap: var(--space-2);
+      align-items: stretch;
+    }
+
+    .menu-library-dish {
+      display: grid;
+      gap: 6px;
+      padding: var(--space-2);
+      min-height: 100%;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: color-mix(in oklab, var(--surface), var(--bg) 32%);
+    }
+
+    .menu-library-dish-art {
+      display: grid;
+      place-items: center;
+      min-height: 84px;
+      border-radius: calc(var(--radius-md) - 2px);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .menu-library-dish-art svg,
+    .menu-library-dish-art .dish-img {
+      width: min(100%, 92px);
+      max-height: 72px;
+    }
+
+    .menu-library-dish-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .menu-library-dish-copy strong {
+      font-size: 14px;
+      line-height: 1.15;
+    }
+
+    .menu-library-dish-copy span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.1;
+    }
+
+    #recipes .recipe-card.menu-library-card {
+      grid-template-columns: 1fr;
+      align-items: start;
+      gap: var(--space-3);
+      padding: var(--space-3);
+    }
+
     .menu-card-inner {
       position: relative;
       display: grid;
@@ -4158,6 +4238,14 @@
         <path d="M9 12h12"></path>
       </svg>
     </button>
+    <button class="icon-btn" type="button" id="openLeftoversBtn" aria-label="昨天的剩菜" title="昨天的剩菜">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 7h12v10H6z"></path>
+        <path d="M4 10h16"></path>
+        <path d="M12 3v6"></path>
+        <path d="M9 6h6"></path>
+      </svg>
+    </button>
     <button class="icon-btn" type="button" id="openRecipeListBtn" aria-label="菜品清单" title="菜品清单">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M8 6h13"></path>
@@ -4208,14 +4296,6 @@
           <p class="lead fade-step">花 5 分钟时间，做只值 5 分的料理</p>
         </div>
         <div class="meal-panel fade-step">
-          <button class="icon-btn" type="button" id="openLeftoversBtn" aria-label="昨天的剩菜" title="昨天的剩菜">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M6 7h12v10H6z"></path>
-              <path d="M4 10h16"></path>
-              <path d="M12 3v6"></path>
-              <path d="M9 6h6"></path>
-            </svg>
-          </button>
           <div class="meal-list" id="mealList" aria-label="餐次选择"></div>
           <button class="btn btn-primary" type="button" id="homeStart">开始</button>
         </div>
@@ -4528,7 +4608,7 @@ Pages 来源：main / root
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.07.19.3";
+    const APP_VERSION = "2026.07.19.4";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -5013,6 +5093,25 @@ Pages 来源：main / root
           if (!deduped.includes(name)) deduped.push(name);
         });
       return deduped.join(" + ");
+    }
+
+    function menuLibraryDishMeta(dish) {
+      const parts = [dish.label === "-" ? "单品" : dish.label];
+      const appliance = applianceLabels[dish.appliance] || dish.tool || "";
+      if (appliance) parts.push(appliance);
+      return parts.filter(Boolean).join(" · ");
+    }
+
+    function renderMenuLibraryDishes(recipe) {
+      return recipe.dishes.map((dish) => `
+        <div class="menu-library-dish">
+          <div class="menu-library-dish-art">${dishSvg(dish)}</div>
+          <div class="menu-library-dish-copy">
+            <strong>${dish.name}</strong>
+            <span>${menuLibraryDishMeta(dish)}</span>
+          </div>
+        </div>
+      `).join("");
     }
 
     function cloneDish(dish, source = "") {
@@ -5561,8 +5660,9 @@ Pages 来源：main / root
             </div>
           </div>
         </article>`;
-
-      guideList.innerHTML = `
+      const cards = [];
+      if (prepackaged.length || thaw.length) {
+        cards.push(`
         <article class="guide-card prep-card" role="listitem">
           <div class="guide-main">
             <p class="guide-number" aria-label="步骤 0">0</p>
@@ -5573,19 +5673,22 @@ Pages 来源：main / root
               </p>
             </div>
           </div>
-        </article>
-        ${guideStep({
-          number: 1,
-          instruction: toolInstruction(riceItems, "电饭煲")
-        })}
-        ${guideStep({
-          number: 2,
-          instruction: toolInstruction(fryerItems, "空气炸锅")
-        })}
-        ${guideStep({
-          number: 3,
-          instruction: toolInstruction(inductionItems, "电磁炉")
-        })}`;
+        </article>`);
+      }
+      let stepNumber = 1;
+      [
+        [riceItems, "电饭煲"],
+        [fryerItems, "空气炸锅"],
+        [inductionItems, "电磁炉"]
+      ].forEach(([items, tool]) => {
+        if (!items.length) return;
+        cards.push(guideStep({
+          number: stepNumber,
+          instruction: toolInstruction(items, tool)
+        }));
+        stepNumber += 1;
+      });
+      guideList.innerHTML = cards.join("") || `<div class="empty" role="status">这次没有需要特别准备的步骤。</div>`;
     }
 
     function normalizeSearchText(text) {
@@ -5656,12 +5759,14 @@ Pages 来源：main / root
         const enabled = menuTemplateEnabled({ id: recipe.templateId });
         const template = menuTemplates.find((item) => item.id === recipe.templateId);
         return `
-        <button class="recipe-card menu-card${enabled ? "" : " is-disabled"}" type="button" data-library-id="${libraryId}" aria-selected="${state.activeRecipeId === libraryId}" aria-pressed="${enabled}" aria-label="${enabled ? "停用" : "启用"}菜单组合：${recipe.source} ${recipe.comboName}">
-          <div class="mini-art">${ingredientSvg(recipe)}</div>
-          <div>
+        <button class="recipe-card menu-library-card${enabled ? "" : " is-disabled"}" type="button" data-library-id="${libraryId}" aria-selected="${state.activeRecipeId === libraryId}" aria-pressed="${enabled}" aria-label="${enabled ? "停用" : "启用"}菜单组合：${recipe.source} ${recipe.comboName}">
+          <div class="menu-library-head">
             <p class="eyebrow">${recipe.source}</p>
             <h3>${templateDisplayName(template || { tokens: String(recipe.comboName || "").split(" + ") })}</h3>
-            <p class="quote-line" style="margin-top: var(--space-2);">${recipe.source}</p>
+            <p class="menu-library-source">${recipe.comboName}</p>
+          </div>
+          <div class="menu-library-dishes">
+            ${renderMenuLibraryDishes(recipe)}
           </div>
         </button>`;
       }).join("") || `<div class="empty" role="status">没有匹配菜单。</div>`;
@@ -5838,8 +5943,6 @@ Pages 来源：main / root
       navButtons.forEach((button) => {
         if (button.dataset.nav) button.setAttribute("aria-current", button.dataset.nav === id ? "page" : "false");
       });
-      const leftoversBtn = document.getElementById("openLeftoversBtn");
-      if (leftoversBtn) leftoversBtn.hidden = id !== "home";
       const backBtn = document.getElementById("backBtn");
       if (backBtn) backBtn.hidden = id === "home";
       if (push && state.history[state.history.length - 1] !== id) state.history.push(id);

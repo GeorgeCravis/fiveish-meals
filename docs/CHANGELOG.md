@@ -492,15 +492,15 @@ Notes for Open Design:
 
 Files changed:
 
-- rontend/prototype/index.html`r
-- rontend/prototype/version.json`r
-- docs/CHANGELOG.md`r
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
 
 Behavior changes:
 
-- Kept the '昨天的剩菜' entry only on the home screen and hid it on other pages.
-- Simplified recipe library menu cards to show only the combo name and meal source.
-- Deduplicated repeated combo labels in the recipe library display.
-- Changed recipe library cards so clicking again toggles the item back to enabled.
-- Disabled dishes and menu templates are now excluded from draw pools.
+- Moved the leftovers shortcut into the top-right action bar so it sits beside the other global buttons.
+- Reworked the recipe library menu view into stacked combo cards that show the dishes inside each combo as cards.
+- Added card-style rendering for the menu-library combo contents.
+- Hid guide step 0 when there is nothing to prep or thaw.
+- Kept steps 1-3 in order but removed any empty appliance step instead of showing a blank step.
 
