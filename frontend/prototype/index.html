@@ -4224,6 +4224,60 @@
         grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
+
+    @media (min-width: 761px) {
+      .screen {
+        min-height: 100svh;
+        max-height: none;
+        height: auto;
+        overflow: visible;
+        padding-block: calc(76px + env(safe-area-inset-top)) max(32px, env(safe-area-inset-bottom));
+      }
+
+      .screen > .shell,
+      #guide.screen > .shell {
+        min-height: auto;
+        height: auto;
+      }
+
+      #guide.screen {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+      }
+
+      #guide .cook-workspace {
+        height: auto;
+        min-height: 0;
+        align-items: start;
+      }
+
+      #guide .cook-panel,
+      #guide .cook-panel-head,
+      #guide .guide-list,
+      #guide #timer {
+        min-height: 0;
+      }
+
+      #guide .cook-panel {
+        overflow: visible;
+      }
+
+      #guide .guide-list {
+        grid-template-rows: none;
+        overflow: visible;
+      }
+
+      #guide #timer .timer-layout.timer-layout-watch {
+        height: auto;
+      }
+
+      #recipes .recipe-grid,
+      #recipes .recipe-detail,
+      #leftovers .leftover-grid {
+        max-height: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4608,7 +4662,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.07.20.1";
+    const APP_VERSION = "2026.07.20.2";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;

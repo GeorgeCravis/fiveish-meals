@@ -5,6 +5,30 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-07-20 - Codex - published 2026.07.20.2 desktop overflow fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Added a desktop-only layout override for screens wider than 760px so pages can
+  grow and use page-level scrolling instead of being clipped to `100svh`.
+- Removed desktop height clipping from the cooking guide, recipe library,
+  recipe detail, and leftovers list while preserving the existing mobile rules.
+- Bumped app version from `2026.07.20.1` to `2026.07.20.2` for update detection.
+
+Behavior preserved:
+
+- Mobile compact layout and PWA install behavior.
+- 15:00 daily reset.
+- Shared label draw cache and concrete-dish category lock.
+- Update-check banner and cache-clearing update button.
+- Dish-image service worker cache and idle-time warmup.
+
 ## 2026-07-19 - Codex - published 2026.07.19.2 leftovers entry and guide text
 
 Files changed:
