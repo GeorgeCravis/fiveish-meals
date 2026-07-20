@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.07.19.4",
-  "releasedAt": "2026-07-19T12:05:00+08:00",
-  "notes": "Moves the leftovers shortcut into the top-right action bar, renders menu-library combos as stacked dish cards, and hides guide steps when they are empty."
+  "version": "2026.07.20.1",
+  "releasedAt": "2026-07-20T09:30:00+08:00",
+  "notes": "Restores GitHub Pages as the deployment target and updates the in-app deployment checklist."
 }

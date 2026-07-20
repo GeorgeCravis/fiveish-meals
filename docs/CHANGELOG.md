@@ -488,6 +488,26 @@ Notes for Open Design:
   `frontend/prototype/version.json`.
 
 
+## 2026-07-20 - Codex
+
+Files changed:
+
+- `.github/workflows/pages.yml`
+- `.github/workflows/deploy-aliyun-oss.yml`
+- `docs/ALIYUN_DEPLOY.md`
+- `docs/CODEX_HANDOFF.md`
+- `START_HERE.md`
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Behavior changes:
+
+- Restored GitHub Pages as the active deployment target.
+- Removed the Alibaba Cloud OSS deployment workflow and deployment notes.
+- Updated the in-app deployment checklist back to GitHub Pages.
+- Bumped the app version to `2026.07.20.1`.
+
 ## 2026-07-19 - Codex
 
 Files changed:

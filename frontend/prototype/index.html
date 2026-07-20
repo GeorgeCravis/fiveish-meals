@@ -4428,7 +4428,7 @@
 
     <section class="screen" id="install" data-od-id="install">
       <div class="shell">
-        <p class="eyebrow">PWA / 阿里云 OSS</p>
+        <p class="eyebrow">PWA / GitHub Pages</p>
         <h2 class="section-title">发布与安装</h2>
         <p class="lead" style="margin-top: var(--space-4);">第一版适合用单页 PWA 发布：一个入口、可安装、可离线补强。</p>
         <div class="install-grid">
@@ -4439,10 +4439,10 @@
           </article>
           <article class="install-card">
             <h3>发布步骤</h3>
-            <div class="codebox" id="deployText">OSS Bucket：fiveish-meals
-入口文件：frontend/prototype/index.html
-发布方式：GitHub Actions -> Alibaba Cloud OSS
-静态网站：开启 index.html 作为首页与 404 回退</div>
+            <div class="codebox" id="deployText">仓库名：fiveish-meals
+入口文件：index.html
+Pages 来源：GitHub Actions
+发布路径：frontend/prototype/</div>
             <button class="btn" type="button" data-copy="deployText" style="margin-top: var(--space-5);">复制部署清单</button>
           </article>
           <article class="install-card">
@@ -4608,7 +4608,7 @@
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.07.19.4";
+    const APP_VERSION = "2026.07.20.1";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
