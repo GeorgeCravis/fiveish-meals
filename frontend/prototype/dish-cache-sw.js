@@ -1,4 +1,5 @@
-const CACHE_VERSION = "2026.07.18.2";
+const DEFAULT_CACHE_VERSION = "2026.08.29.1";
+const CACHE_VERSION = new URL(self.location.href).searchParams.get("v") || DEFAULT_CACHE_VERSION;
 const DISH_CACHE = `fiveish-dish-images-${CACHE_VERSION}`;
 const DISH_IMAGE_PATH = "/assets/dishes/plain/";
 

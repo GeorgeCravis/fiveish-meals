@@ -5,6 +5,35 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.1 hard-code audit and cache fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `frontend/prototype/dish-cache-sw.js`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Audited the published prototype for source-data drift similar to the motto
+  sync issue.
+- Confirmed `dishCatalog` and `menuTemplates` currently match
+  `菜品菜单.xlsx`: 34 dishes and 8 menu templates.
+- Changed the dish-image service worker registration to include `APP_VERSION`
+  in the service worker URL, so image cache names rotate with app releases.
+- Changed `dish-cache-sw.js` to read its cache version from its own `?v=...`
+  query parameter, with `2026.08.29.1` as the fallback version.
+- Bumped app version from `2026.08.28.1` to `2026.08.29.1` for update
+  detection.
+
+Behavior preserved:
+
+- Current root `motto.txt` remains synced into the published app.
+- Mobile compact layout and desktop overflow fix.
+- 15:00 daily reset.
+- Shared label draw cache and concrete-dish category lock.
+
 ## 2026-08-28 - Codex - published 2026.08.28.1 motto sync fix
 
 Files changed:

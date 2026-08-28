@@ -4652,7 +4652,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.28.1";
+    const APP_VERSION = "2026.08.29.1";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -4683,7 +4683,7 @@ Pages 来源：GitHub Actions
 
     function registerDishImageCache() {
       if (!("serviceWorker" in navigator)) return;
-      navigator.serviceWorker.register(DISH_CACHE_SW_URL).catch(() => {
+      navigator.serviceWorker.register(`${DISH_CACHE_SW_URL}?v=${encodeURIComponent(APP_VERSION)}`).catch(() => {
         // Image caching is an enhancement; the app still works without it.
       });
     }

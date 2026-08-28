@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.28.1",
-  "releasedAt": "2026-08-28T23:55:12+08:00",
-  "notes": "Syncs Fiveish mottos from motto.txt into the published app."
+  "version": "2026.08.29.1",
+  "releasedAt": "2026-08-29T00:12:00+08:00",
+  "notes": "Keeps the dish image service worker cache aligned with the app version."
 }
