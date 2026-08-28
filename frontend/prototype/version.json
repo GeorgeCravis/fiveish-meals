@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.07.20.2",
-  "releasedAt": "2026-07-20T10:20:00+08:00",
-  "notes": "Fixes desktop overflow clipping while preserving the compact mobile PWA layout."
+  "version": "2026.08.28.1",
+  "releasedAt": "2026-08-28T23:55:12+08:00",
+  "notes": "Syncs Fiveish mottos from motto.txt into the published app."
 }

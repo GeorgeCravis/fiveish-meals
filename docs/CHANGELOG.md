@@ -5,6 +5,31 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-28 - Codex - published 2026.08.28.1 motto sync fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `scripts/sync_mottos.py`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Synced the app's `summaryMottos` array from the current root `motto.txt`
+  list, reducing the published Fiveish motto list from the old hard-coded 19
+  entries to the current 9 entries.
+- Added `scripts/sync_mottos.py` so future motto edits can be pushed into the
+  published prototype before deployment.
+- Bumped app version from `2026.07.20.2` to `2026.08.28.1` for update detection.
+
+Behavior preserved:
+
+- Mobile compact layout and desktop overflow fix.
+- 15:00 daily reset.
+- Shared label draw cache and concrete-dish category lock.
+- Update-check banner and cache-clearing update button.
+
 ## 2026-07-20 - Codex - published 2026.07.20.2 desktop overflow fix
 
 Files changed:
