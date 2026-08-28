@@ -5,6 +5,32 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.2 Android light background fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/manifest.webmanifest`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Added an explicit light color-scheme meta tag and `color-scheme: only light`
+  at the document root so Android Chrome/WebView does not auto-darken the app.
+- Added solid fallback backgrounds to `html`, `body`, and `main` so transparent
+  viewport gaps cannot render as black behind the warm paper background.
+- Aligned the PWA manifest `background_color` and `theme_color` with the current
+  Fiveish visual palette.
+- Bumped app version from `2026.08.29.1` to `2026.08.29.2` for update detection.
+
+Behavior preserved:
+
+- Current root `motto.txt` remains synced into the published app.
+- Dish-image cache rotates with the app version.
+- Mobile compact layout and desktop overflow fix.
+- 15:00 daily reset.
+
 ## 2026-08-29 - Codex - published 2026.08.29.1 hard-code audit and cache fix
 
 Files changed:
