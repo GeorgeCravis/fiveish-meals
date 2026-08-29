@@ -4404,6 +4404,27 @@
       padding-block: 8px;
     }
 
+    #draw .draw-motto {
+      padding: 2px clamp(8px, 2vw, 16px) 6px;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
+      text-align: center;
+    }
+
+    #draw .draw-motto::before,
+    #draw .draw-motto::after {
+      content: none;
+    }
+
+    #draw .draw-motto .eyebrow {
+      margin: 0;
+      color: color-mix(in oklab, var(--fg), transparent 34%);
+      font-size: clamp(11px, 2.6vw, 13px);
+      letter-spacing: .08em;
+    }
+
     #draw .shell {
       gap: 4px;
     }
@@ -4411,6 +4432,8 @@
     #draw .draw-motto p:last-child {
       margin-top: 2px;
       line-height: 1.2;
+      color: color-mix(in oklab, var(--fg), transparent 6%);
+      text-shadow: 0 1px 0 color-mix(in oklab, var(--surface), transparent 16%);
     }
 
     #draw .summary-grid.menu-reveal-list {
@@ -4433,7 +4456,25 @@
     }
 
     #guide #timer .cook-panel-head {
-      display: none;
+      display: grid;
+      justify-items: center;
+      padding: clamp(8px, 1.4svh, 12px) clamp(10px, 1.6vw, 16px) 0;
+      text-align: center;
+    }
+
+    #guide #timerPanelTitle {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 0;
+      overflow: visible;
+      clip: auto;
+      white-space: normal;
+      color: var(--fg);
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 560;
+      line-height: 1.05;
     }
 
     #guide .guide-list {
@@ -4460,7 +4501,7 @@
 
     @media (max-width: 760px) {
       #draw .draw-motto {
-        padding: 8px 12px;
+        padding: 0 8px 4px;
       }
 
       #draw .summary-grid.menu-reveal-list {
@@ -4846,7 +4887,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.8";
+    const APP_VERSION = "2026.08.29.9";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;

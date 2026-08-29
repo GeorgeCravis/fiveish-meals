@@ -5,6 +5,22 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - prepared 2026.08.29.9 timer title and draw motto
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Added a visible `5分Timer` title directly above the timer clock face without
+  restoring the old `计时` label.
+- Removed the draw-page `5分哲理` card treatment so the motto sits directly on
+  the page background as a centered, lightweight text treatment.
+- Bumped app version from `2026.08.29.8` to `2026.08.29.9` for update detection.
+
 ## 2026-08-29 - Codex - prepared 2026.08.29.8 image cache and motto cycle
 
 Files changed:
