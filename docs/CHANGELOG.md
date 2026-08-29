@@ -5,7 +5,7 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
-## 2026-08-29 - Codex - prepared 2026.08.29.9 timer title and draw motto
+## 2026-08-29 - Codex - published 2026.08.29.9 timer title and draw motto
 
 Files changed:
 
@@ -21,7 +21,7 @@ Changes:
   the page background as a centered, lightweight text treatment.
 - Bumped app version from `2026.08.29.8` to `2026.08.29.9` for update detection.
 
-## 2026-08-29 - Codex - prepared 2026.08.29.8 image cache and motto cycle
+## 2026-08-29 - Codex - published 2026.08.29.8 image cache and motto cycle
 
 Files changed:
 
