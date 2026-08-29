@@ -4287,6 +4287,57 @@
         max-height: none;
       }
     }
+
+    .app-actions {
+      flex-wrap: nowrap;
+      max-width: calc(100vw - 24px);
+    }
+
+    .icon-btn {
+      flex: 0 0 auto;
+    }
+
+    .motto-stage {
+      width: min(680px, 100%);
+      justify-self: center;
+    }
+
+    .motto-card {
+      width: 100%;
+    }
+
+    .motto-card p {
+      width: 100%;
+      max-width: none;
+      overflow-wrap: normal;
+      word-break: normal;
+      text-wrap: pretty;
+    }
+
+    @media (max-width: 760px) {
+      .app-actions {
+        max-width: calc(100vw - 20px);
+        gap: 5px;
+      }
+
+      .icon-btn {
+        width: clamp(34px, 9.2vw, 40px);
+        height: clamp(34px, 9.2vw, 40px);
+      }
+
+      .icon-btn svg {
+        width: clamp(17px, 4.8vw, 20px);
+        height: clamp(17px, 4.8vw, 20px);
+      }
+
+      .motto-stage {
+        width: min(430px, 100%);
+      }
+
+      .motto-card p {
+        font-size: clamp(26px, 7.8vw, 38px);
+      }
+    }
   </style>
 </head>
 <body>
@@ -4661,7 +4712,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.3";
+    const APP_VERSION = "2026.08.29.4";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;

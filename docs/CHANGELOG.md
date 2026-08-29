@@ -5,6 +5,32 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.4 action row and motto width fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Fixed the top quick-action group wrapping into two rows when all five buttons
+  are visible by forcing a single no-wrap row and allowing icon buttons to
+  shrink slightly on narrow screens.
+- Fixed the `五分哲理` card feeling width-variable with short mottos by giving
+  the stage/card a stable width and letting text use the full card width.
+- Delayed motto line wrapping by removing the old `16em` paragraph max-width
+  constraint while keeping normal Chinese line breaking.
+- Bumped app version from `2026.08.29.3` to `2026.08.29.4` for update detection.
+
+Behavior preserved:
+
+- Meal selection redraw fix.
+- Android light background fix.
+- Current root `motto.txt` remains synced into the published app.
+- Dish-image cache rotates with the app version.
+
 ## 2026-08-29 - Codex - published 2026.08.29.3 meal-selection redraw fix
 
 Files changed:
