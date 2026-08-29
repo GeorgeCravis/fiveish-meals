@@ -5,6 +5,31 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - prepared 2026.08.29.6 draw controls polish
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Renamed the draw-page motto panel label from `五分哲思` to `5分哲理`.
+- Compactly aligned each meal label with its reroll, combo, add, and remove
+  controls in one row to reduce vertical space in the draw results.
+- Removed persistent visual active styling from combo/add buttons after use and
+  blurred draw action buttons after clicks so they do not look held down.
+- Kept remove mode functional through `aria-pressed`, but changed its visual
+  treatment from a filled pressed button to a lighter danger-colored control.
+- Bumped app version from `2026.08.29.5` to `2026.08.29.6` for update detection.
+
+Behavior preserved:
+
+- Utility-page back navigation fix from `2026.08.29.5`.
+- Menu-combination cards show only pairing text.
+- Dish cards omit `无需解冻` for no-thaw dishes.
+
 ## 2026-08-29 - Codex - published 2026.08.29.5 utility navigation and recipe labels
 
 Files changed:

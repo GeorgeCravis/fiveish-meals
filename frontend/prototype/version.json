@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.29.5",
-  "releasedAt": "2026-08-29T01:24:00+08:00",
-  "notes": "Keeps utility-page back navigation anchored to the main flow and simplifies recipe library labels."
+  "version": "2026.08.29.6",
+  "releasedAt": "2026-08-29T01:42:00+08:00",
+  "notes": "Compacts draw-card controls and prevents meal action buttons from staying visually pressed."
 }

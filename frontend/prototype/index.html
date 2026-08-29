@@ -2191,8 +2191,8 @@
     .meal-action-btn {
       display: grid;
       place-items: center;
-      width: 38px;
-      height: 38px;
+      width: 34px;
+      height: 34px;
       border: 1px solid var(--border-soft);
       border-radius: var(--radius-sm);
       background: var(--surface);
@@ -2207,8 +2207,8 @@
     }
 
     .meal-action-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 17px;
+      height: 17px;
       fill: none;
       stroke: currentColor;
       stroke-width: 1.9;
@@ -2229,8 +2229,7 @@
     }
 
     .meal-action-btn:hover,
-    .meal-action-btn:focus-visible,
-    .meal-action-btn.is-active {
+    .meal-action-btn:focus-visible {
       outline: none;
       border-color: color-mix(in oklab, var(--accent), var(--border-soft) 50%);
       background: var(--fg);
@@ -2241,10 +2240,9 @@
       transform: translateY(1px) scale(.97);
     }
 
-    .meal-action-btn.is-danger.is-active {
+    .meal-action-btn.is-danger {
       border-color: color-mix(in oklab, var(--danger), var(--border-soft) 30%);
-      background: var(--danger);
-      color: var(--accent-on);
+      color: var(--danger);
     }
 
     .dish-card-row {
@@ -4338,6 +4336,47 @@
         font-size: clamp(26px, 7.8vw, 38px);
       }
     }
+
+    #draw .meal-menu-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    #draw .meal-menu-head h3 {
+      font-size: clamp(18px, 4.8vw, 24px);
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+
+    #draw .meal-menu-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    @media (max-width: 760px) {
+      #draw .meal-menu-actions {
+        gap: 4px;
+      }
+
+      #draw .meal-action-btn {
+        width: clamp(28px, 7.6vw, 32px);
+        height: clamp(28px, 7.6vw, 32px);
+      }
+
+      #draw .meal-action-symbol {
+        font-size: 21px;
+      }
+
+      #draw .meal-action-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4444,7 +4483,7 @@
     <section class="screen" id="draw" data-od-id="draw">
       <div class="shell">
         <div class="motto-panel draw-motto">
-          <p class="eyebrow">五分哲思</p>
+          <p class="eyebrow">5分哲理</p>
           <p id="summaryMotto">掌控5分钟的做菜用时，掌控你的人生</p>
         </div>
         <div class="summary-grid menu-reveal-list" id="summaryGrid" role="list" aria-live="polite"></div>
@@ -4712,7 +4751,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.5";
+    const APP_VERSION = "2026.08.29.6";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -5661,13 +5700,13 @@ Pages 来源：GitHub Actions
               <button class="meal-action-btn" type="button" data-reroll-meal="${mealId}" aria-label="重抽${mealLabel(mealId)}" title="重抽${mealLabel(mealId)}">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.6-5.7"></path><path d="M18 3v5h-5"></path><path d="M20 12a8 8 0 0 1-13.6 5.7"></path><path d="M6 21v-5h5"></path></svg>
               </button>
-              <button class="meal-action-btn ${trayOpen === "template" ? "is-active" : ""}" type="button" data-open-tray="${mealId}" data-tray-mode="template" aria-label="给${mealLabel(mealId)}换菜单组合" title="换组合">
+              <button class="meal-action-btn" type="button" data-open-tray="${mealId}" data-tray-mode="template" aria-label="给${mealLabel(mealId)}换菜单组合" title="换组合">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h10"></path><path d="M4 19h16"></path><path d="M17 9l3 3-3 3"></path></svg>
               </button>
-              <button class="meal-action-btn ${trayOpen === "dish" ? "is-active" : ""}" type="button" data-open-tray="${mealId}" data-tray-mode="dish" aria-label="给${mealLabel(mealId)}加菜" title="加菜">
+              <button class="meal-action-btn" type="button" data-open-tray="${mealId}" data-tray-mode="dish" aria-label="给${mealLabel(mealId)}加菜" title="加菜">
                 <span class="meal-action-symbol" aria-hidden="true">+</span>
               </button>
-              <button class="meal-action-btn ${removeMode ? "is-danger is-active" : ""}" type="button" data-toggle-remove="${mealId}" aria-pressed="${removeMode}" aria-label="${removeMode ? "退出" : "进入"}${mealLabel(mealId)}减菜模式" title="减菜">
+              <button class="meal-action-btn ${removeMode ? "is-danger" : ""}" type="button" data-toggle-remove="${mealId}" aria-pressed="${removeMode}" aria-label="${removeMode ? "退出" : "进入"}${mealLabel(mealId)}减菜模式" title="减菜">
                 <span class="meal-action-symbol" aria-hidden="true">-</span>
               </button>
             </div>
@@ -5678,10 +5717,14 @@ Pages 来源：GitHub Actions
         </article>`;
       }).join("");
       summaryGrid.querySelectorAll("[data-reroll-meal]").forEach((button) => {
-        button.addEventListener("click", () => rerollMeal(button.dataset.rerollMeal));
+        button.addEventListener("click", () => {
+          button.blur();
+          rerollMeal(button.dataset.rerollMeal);
+        });
       });
       summaryGrid.querySelectorAll("[data-open-tray]").forEach((button) => {
         button.addEventListener("click", () => {
+          button.blur();
           const mealId = button.dataset.openTray;
           const mode = button.dataset.trayMode;
           const isSame = state.activeTray?.mealId === mealId && state.activeTray?.mode === mode;
@@ -5693,10 +5736,16 @@ Pages 来源：GitHub Actions
         });
       });
       summaryGrid.querySelectorAll("[data-toggle-remove]").forEach((button) => {
-        button.addEventListener("click", () => toggleRemoveMode(button.dataset.toggleRemove));
+        button.addEventListener("click", () => {
+          button.blur();
+          toggleRemoveMode(button.dataset.toggleRemove);
+        });
       });
       summaryGrid.querySelectorAll("[data-remove-dish]").forEach((button) => {
-        button.addEventListener("click", () => removeDishFromMeal(button.dataset.removeDish, button.dataset.dishIndex));
+        button.addEventListener("click", () => {
+          button.blur();
+          removeDishFromMeal(button.dataset.removeDish, button.dataset.dishIndex);
+        });
       });
       renderMenuTray();
       if (shouldAnimate) {
