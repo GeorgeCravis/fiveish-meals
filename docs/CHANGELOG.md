@@ -5,6 +5,34 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.7 timer and leftovers polish
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Made recipe-library menu combination cards render source and pairing text on
+  one line, with long combinations truncated instead of wrapping vertically.
+- Reduced the gap between the draw-page `5分哲理` panel and the meal results.
+- Changed the draw-page primary action label from `开始` to `做菜`.
+- Reordered the timer screen so the clock appears before cooking steps, removed
+  the visible `5分Timer` and `计时` labels there, and changed the idle timer
+  button label from `开始` to `计时`.
+- Vertically centered cooking-step text and tightened guide-card vertical
+  spacing.
+- Made `选择昨天剩菜` first load yesterday's saved menu, then fall back to the
+  most recent previous locally saved menu when yesterday has no record.
+- Bumped app version from `2026.08.29.6` to `2026.08.29.7` for update detection.
+
+Notes:
+
+- Leftover history is still local to the same browser/device because the app has
+  no shared backend storage.
+
 ## 2026-08-29 - Codex - prepared 2026.08.29.6 draw controls polish
 
 Files changed:

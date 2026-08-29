@@ -2511,21 +2511,29 @@
     }
 
     .menu-library-card {
-      display: grid;
-      gap: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
       padding: var(--space-3);
       min-height: 100%;
     }
 
     .menu-library-head {
-      display: grid;
-      gap: 4px;
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-2);
+      min-width: 0;
+      width: 100%;
     }
 
     .menu-library-head h3 {
       margin: 0;
       font-size: clamp(17px, 2.6vw, 24px);
       line-height: 1.08;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .menu-library-source {
@@ -4377,6 +4385,79 @@
         height: 15px;
       }
     }
+
+    #draw .draw-motto {
+      padding-block: 8px;
+    }
+
+    #draw .shell {
+      gap: 4px;
+    }
+
+    #draw .draw-motto p:last-child {
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    #draw .summary-grid.menu-reveal-list {
+      margin-top: 4px;
+    }
+
+    #recipes .menu-library-card {
+      min-height: 0;
+      padding-block: 10px;
+    }
+
+    #recipes .menu-library-head .eyebrow {
+      flex: 0 0 auto;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    #guide .cook-workspace {
+      grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr);
+    }
+
+    #guide #timer .cook-panel-head {
+      display: none;
+    }
+
+    #guide .guide-list {
+      gap: clamp(5px, .9svh, 8px);
+      padding-block: clamp(6px, 1svh, 10px);
+    }
+
+    #guide .guide-card {
+      align-items: center;
+      padding-block: clamp(6px, 1svh, 10px);
+    }
+
+    #guide .guide-main {
+      align-items: center;
+    }
+
+    #guide .guide-instruction {
+      line-height: 1.2;
+    }
+
+    #guide #timer .timer-layout.timer-layout-watch {
+      padding-block: clamp(8px, 1.2svh, 12px);
+    }
+
+    @media (max-width: 760px) {
+      #draw .draw-motto {
+        padding: 8px 12px;
+      }
+
+      #draw .summary-grid.menu-reveal-list {
+        gap: 6px;
+        margin-top: 2px;
+      }
+
+      #guide .cook-workspace {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -4490,29 +4571,18 @@
         <aside class="menu-tray" id="menuTray" hidden aria-live="polite"></aside>
         <div class="total-strip">
           <button class="btn" type="button" id="redrawMenuBtn">全部重抽</button>
-          <button class="btn btn-primary" type="button" id="cookBtn">开始</button>
+          <button class="btn btn-primary" type="button" id="cookBtn">做菜</button>
         </div>
       </div>
     </section>
 
     <section class="screen" id="guide" data-od-id="guide">
       <div class="shell">
-        <p class="eyebrow">5分Timer</p>
         <div class="cook-workspace">
-          <section class="cook-panel cook-guide-panel" aria-labelledby="guidePanelTitle">
-            <div class="cook-panel-head">
-              <div>
-                <p class="eyebrow">步骤</p>
-                <h3 class="sr-only" id="guidePanelTitle">做菜步骤</h3>
-              </div>
-            </div>
-            <div class="guide-list" id="guideList" role="list"></div>
-          </section>
           <section class="cook-panel cook-timer-panel" id="timer" aria-labelledby="timerPanelTitle">
             <div class="cook-panel-head">
               <div>
-                <p class="eyebrow">计时</p>
-                <h3 id="timerPanelTitle">5分Timer</h3>
+                <h3 class="sr-only" id="timerPanelTitle">5分Timer</h3>
               </div>
             </div>
             <div class="timer-layout timer-layout-watch">
@@ -4524,10 +4594,19 @@
               </div>
               <div class="sr-only" id="timerStatus" role="timer" aria-live="polite">5 分 00 秒</div>
               <div class="timer-actions timer-actions-watch">
-                <button class="btn btn-primary" type="button" id="timerToggle" aria-pressed="false">开始</button>
+                <button class="btn btn-primary" type="button" id="timerToggle" aria-pressed="false">计时</button>
                 <button class="btn" type="button" id="timerReset">重置</button>
               </div>
             </div>
+          </section>
+          <section class="cook-panel cook-guide-panel" aria-labelledby="guidePanelTitle">
+            <div class="cook-panel-head">
+              <div>
+                <p class="eyebrow">步骤</p>
+                <h3 class="sr-only" id="guidePanelTitle">做菜步骤</h3>
+              </div>
+            </div>
+            <div class="guide-list" id="guideList" role="list"></div>
           </section>
         </div>
       </div>
@@ -4751,7 +4830,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.6";
+    const APP_VERSION = "2026.08.29.7";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -4913,6 +4992,28 @@ Pages 来源：GitHub Actions
       return null;
     }
 
+    function loadMostRecentPreviousMenu(beforeDate = menuDateKey()) {
+      const prefixes = [`${DAILY_MENU_PREFIX}:`, `${LEGACY_DAILY_MENU_PREFIX}:`];
+      const menus = [];
+      try {
+        const storage = window.localStorage;
+        if (!storage) return null;
+        for (let index = 0; index < storage.length; index += 1) {
+          const key = storage.key(index);
+          if (!key || !prefixes.some((prefix) => key.startsWith(prefix))) continue;
+          const raw = storage.getItem(key);
+          if (!raw) continue;
+          const payload = JSON.parse(raw);
+          if (!payload?.date || !payload?.picks || payload.date >= beforeDate) continue;
+          menus.push(payload);
+        }
+      } catch {
+        return null;
+      }
+      menus.sort((left, right) => right.date.localeCompare(left.date));
+      return menus[0] || null;
+    }
+
     function sameMealSelection(left, right) {
       if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false;
       const rightSet = new Set(right);
@@ -5021,11 +5122,11 @@ Pages 来源：GitHub Actions
         if (!key || seen.has(key)) return false;
         seen.add(key);
         return true;
-      });
+      }).map((dish) => dishCatalog.find((item) => item.id === dish.id || item.name === dish.name) || dish);
     }
 
     function yesterdayLeftovers() {
-      const yesterdayMenu = loadMenuForDate(menuDateKey(-1));
+      const yesterdayMenu = loadMenuForDate(menuDateKey(-1)) || loadMostRecentPreviousMenu();
       return uniqueDishesFromPicks(yesterdayMenu?.picks);
     }
 
@@ -6069,7 +6170,7 @@ Pages 来源：GitHub Actions
       state.timerRemainingMs = state.timerDurationMs;
       state.timerEndAt = 0;
       state.timerAnnouncedSecond = null;
-      timerToggle.textContent = "开始";
+      timerToggle.textContent = "计时";
       timerToggle.setAttribute("aria-pressed", "false");
       updateTimer();
     }

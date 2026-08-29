@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.29.6",
-  "releasedAt": "2026-08-29T01:42:00+08:00",
-  "notes": "Compacts draw-card controls and prevents meal action buttons from staying visually pressed."
+  "version": "2026.08.29.7",
+  "releasedAt": "2026-08-29T02:25:00+08:00",
+  "notes": "Polishes menu combination rows, draw spacing, timer layout, and leftover history fallback."
 }
