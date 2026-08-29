@@ -5,6 +5,34 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.5 utility navigation and recipe labels
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Changed `菜品库` and `5分哲理` shortcut navigation so switching between
+  utility pages no longer stacks utility pages in history. Tapping `返回` now
+  returns to the nearest main-flow page: `首页`, `抽卡`, or `做菜/Timer`.
+- Simplified recipe-library menu-combination cards to show only the pairing
+  text, removing the repeated dish-image card strip.
+- Removed the menu detail lead image so menu-combination detail text occupies
+  the full detail panel width.
+- Hid the `无需解冻` line on dish cards and dish details; only dishes that need
+  thawing show a thawing notice.
+- Bumped app version from `2026.08.29.4` to `2026.08.29.5` for update detection.
+
+Behavior preserved:
+
+- Top action buttons remain on one row.
+- Meal selection redraw fix.
+- Android light background fix.
+- Current root `motto.txt` remains synced into the published app.
+
 ## 2026-08-29 - Codex - published 2026.08.29.4 action row and motto width fix
 
 Files changed:

@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.29.4",
-  "releasedAt": "2026-08-29T01:05:00+08:00",
-  "notes": "Keeps the top action buttons on one row and stabilizes the motto card text width."
+  "version": "2026.08.29.5",
+  "releasedAt": "2026-08-29T01:24:00+08:00",
+  "notes": "Keeps utility-page back navigation anchored to the main flow and simplifies recipe library labels."
 }

@@ -4712,7 +4712,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.4";
+    const APP_VERSION = "2026.08.29.5";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -5215,7 +5215,6 @@ Pages 来源：GitHub Actions
     function renderMenuLibraryDishes(recipe) {
       return recipe.dishes.map((dish) => `
         <div class="menu-library-dish">
-          <div class="menu-library-dish-art">${dishSvg(dish)}</div>
           <div class="menu-library-dish-copy">
             <strong>${dish.name}</strong>
             <span>${menuLibraryDishMeta(dish)}</span>
@@ -5869,15 +5868,12 @@ Pages 来源：GitHub Actions
         const libraryId = `menu:${recipe.templateId}`;
         const enabled = menuTemplateEnabled({ id: recipe.templateId });
         const template = menuTemplates.find((item) => item.id === recipe.templateId);
+        const comboName = templateDisplayName(template || { tokens: String(recipe.comboName || "").split(" + ") });
         return `
         <button class="recipe-card menu-library-card${enabled ? "" : " is-disabled"}" type="button" data-library-id="${libraryId}" aria-selected="${state.activeRecipeId === libraryId}" aria-pressed="${enabled}" aria-label="${enabled ? "停用" : "启用"}菜单组合：${recipe.source} ${recipe.comboName}">
           <div class="menu-library-head">
             <p class="eyebrow">${recipe.source}</p>
-            <h3>${templateDisplayName(template || { tokens: String(recipe.comboName || "").split(" + ") })}</h3>
-            <p class="menu-library-source">${recipe.comboName}</p>
-          </div>
-          <div class="menu-library-dishes">
-            ${renderMenuLibraryDishes(recipe)}
+            <h3>${comboName}</h3>
           </div>
         </button>`;
       }).join("") || `<div class="empty" role="status">没有匹配菜单。</div>`;
@@ -5885,13 +5881,16 @@ Pages 来源：GitHub Actions
       dishGrid.innerHTML = dishes.map((dish) => {
         const libraryId = `dish:${dish.id}`;
         const enabled = dishEnabled(dish);
+        const defrostLine = dish.defrost
+          ? `<p class="quote-line" style="margin-top: var(--space-2);">需提前解冻</p>`
+          : "";
         return `
         <button class="recipe-card dish-card${enabled ? "" : " is-disabled"}" type="button" data-library-id="${libraryId}" aria-selected="${state.activeRecipeId === libraryId}" aria-pressed="${enabled}" aria-label="${enabled ? "停用" : "启用"}菜品：${dish.name}">
           <div class="mini-art">${dishSvg(dish)}</div>
           <div>
             <p class="eyebrow">${dish.label === "-" ? "单品" : dish.label}</p>
             <h3>${dish.name}</h3>
-            <p class="quote-line" style="margin-top: var(--space-2);">${dish.defrost ? "需提前解冻" : "无需解冻"}</p>
+            ${defrostLine}
           </div>
         </button>`;
       }).join("") || `<div class="empty" role="status">没有匹配菜品。</div>`;
@@ -5915,6 +5914,7 @@ Pages 来源：GitHub Actions
           recipeDetail.innerHTML = `<div class="empty" role="status">选中的菜品已被移除。</div>`;
           return;
         }
+        const defrostBadge = dish.defrost ? `<span>需要提前解冻</span>` : "";
         recipeDetail.innerHTML = `
           <div class="mini-art">${dishSvg(dish)}</div>
           <article class="panel">
@@ -5923,7 +5923,7 @@ Pages 来源：GitHub Actions
             <p class="quote-line" style="margin-top: var(--space-3);">${dish.label === "-" ? "单品" : dish.label} · ${dish.tool === "-" ? "免开火" : dish.tool}</p>
             <div class="set-items" style="margin-top: var(--space-5);">
               <span>${applianceLabels[dish.appliance]}</span>
-              <span>${dish.defrost ? "需要提前解冻" : "不需要提前解冻"}</span>
+              ${defrostBadge}
             </div>
             <ul class="step-list" style="margin-top: var(--space-5);">
               <li><i>1</i><span>来自「菜品」sheet：name / tool / label / defrost。</span></li>
@@ -5938,9 +5938,8 @@ Pages 来源：GitHub Actions
         recipeDetail.innerHTML = `<div class="empty" role="status">选中的菜谱组合已被移除。</div>`;
         return;
       }
-      recipeDetail.innerHTML = `
-        <div class="mini-art">${ingredientSvg(recipe)}</div>
-        <article class="panel">
+        recipeDetail.innerHTML = `
+        <article class="panel" style="grid-column: 1 / -1;">
           <p class="eyebrow">菜单详情</p>
           <h3 class="section-title">${recipe.source}组合</h3>
           <p class="quote-line" style="margin-top: var(--space-3);">原始组合：${recipe.comboName}</p>
@@ -6058,6 +6057,21 @@ Pages 来源：GitHub Actions
       if (backBtn) backBtn.hidden = id === "home";
       if (push && state.history[state.history.length - 1] !== id) state.history.push(id);
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+    }
+
+    function isMainFlowView(id) {
+      return id === "home" || id === "draw" || id === "guide";
+    }
+
+    function goToUtility(id) {
+      const current = state.history[state.history.length - 1] || "home";
+      const base = [...state.history].reverse().find(isMainFlowView) || "home";
+      if (!isMainFlowView(current)) {
+        state.history[state.history.length - 1] = base;
+        goTo(id);
+        return;
+      }
+      goTo(id);
     }
 
     function goBack() {
@@ -6179,13 +6193,13 @@ Pages 来源：GitHub Actions
       completeLeftoverStep();
     });
     bindClick("backBtn", goBack);
-    bindClick("openRecipeListBtn", () => goTo("recipes"));
-    bindClick("openMottosBtn", () => goTo("mottos"));
+    bindClick("openRecipeListBtn", () => goToUtility("recipes"));
+    bindClick("openMottosBtn", () => goToUtility("mottos"));
     bindClick("restartBtn", restartFlow);
     bindClick("rerollBtn", reroll);
     bindClick("redrawMenuBtn", reroll);
     bindClick("cookBtn", () => goTo("guide"));
-    bindClick("openRecipesBtn", () => goTo("recipes"));
+    bindClick("openRecipesBtn", () => goToUtility("recipes"));
     bindClick("openInstallBtn", () => goTo("install"));
     bindClick("nextMottoBtn", () => {
       state.activeMotto = randomMotto(state.activeMotto || currentMotto());
