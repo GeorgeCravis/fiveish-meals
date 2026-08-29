@@ -5,6 +5,33 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - published 2026.08.29.3 meal-selection redraw fix
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Fixed a home-screen meal selection bug: if the user removed `早饭`, drew a
+  daily menu, returned home, re-selected `早饭`, and started again, the app no
+  longer restores the older saved menu that omitted breakfast.
+- Added meal-selection comparison before reusing a saved daily menu. If the
+  current home selection differs from the saved menu's meals, the app now
+  regenerates and saves a new menu for the selected meals.
+- Kept selected meal ordering stable as `早饭 / 午饭 / 晚饭` when a meal is
+  re-added.
+- Bumped app version from `2026.08.29.2` to `2026.08.29.3` for update detection.
+
+Behavior preserved:
+
+- Reusing today's saved menu still works when the meal selection is unchanged.
+- Current root `motto.txt` remains synced into the published app.
+- Dish-image cache rotates with the app version.
+- Android light background fix.
+
 ## 2026-08-29 - Codex - published 2026.08.29.2 Android light background fix
 
 Files changed:

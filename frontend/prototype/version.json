@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.29.2",
-  "releasedAt": "2026-08-29T00:26:00+08:00",
-  "notes": "Forces the Android PWA and browser surface to use the light Fiveish background."
+  "version": "2026.08.29.3",
+  "releasedAt": "2026-08-29T00:46:00+08:00",
+  "notes": "Regenerates the daily menu when the home meal selection changes."
 }

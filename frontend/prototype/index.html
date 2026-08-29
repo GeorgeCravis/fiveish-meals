@@ -4661,7 +4661,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.2";
+    const APP_VERSION = "2026.08.29.3";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -4821,6 +4821,12 @@ Pages 来源：GitHub Actions
         }
       }
       return null;
+    }
+
+    function sameMealSelection(left, right) {
+      if (!Array.isArray(left) || !Array.isArray(right) || left.length !== right.length) return false;
+      const rightSet = new Set(right);
+      return left.every((mealId) => rightSet.has(mealId));
     }
 
     function hashString(value) {
@@ -5460,7 +5466,8 @@ Pages 来源：GitHub Actions
               state.selectedMeals = state.selectedMeals.filter((meal) => meal !== id);
             }
           } else {
-            state.selectedMeals = [...state.selectedMeals, id];
+            const selected = new Set([...state.selectedMeals, id]);
+            state.selectedMeals = meals.map((meal) => meal.id).filter((mealId) => selected.has(mealId));
           }
           renderMealChoices();
         });
@@ -6016,7 +6023,8 @@ Pages 来源：GitHub Actions
 
     function startFlow() {
       const savedToday = loadMenuForDate();
-      if (savedToday) {
+      const savedMeals = savedToday?.selectedMeals || savedToday?.queue || [];
+      if (savedToday && sameMealSelection(state.selectedMeals, savedMeals)) {
         applyDailyMenu(savedToday);
         renderMealChoices();
         renderDraw(false);
@@ -6024,7 +6032,7 @@ Pages 来源：GitHub Actions
         goTo("draw");
         return;
       }
-      if (state.hasDailyMenu && state.menuDate === menuDateKey()) {
+      if (state.hasDailyMenu && state.menuDate === menuDateKey() && sameMealSelection(state.selectedMeals, state.queue)) {
         renderDraw(false);
         renderGuide();
         goTo("draw");
