@@ -5,6 +5,31 @@ Before changing the prototype, read this file and append a dated entry after the
 change. Keep entries factual: what changed, where, why, and whether it was
 published.
 
+## 2026-08-29 - Codex - prepared 2026.08.29.8 image cache and motto cycle
+
+Files changed:
+
+- `frontend/prototype/index.html`
+- `frontend/prototype/assets/dishes/plain/*.png`
+- `frontend/prototype/version.json`
+- `docs/CHANGELOG.md`
+
+Changes:
+
+- Confirmed the dish-image service worker caches local PNG dish images after
+  first fetch, but reduced first-load cost by resizing 34 local dish images to a
+  mobile-friendly maximum edge of 640 px.
+- Reduced dish image payload from about 40 MB to about 4 MB while keeping the
+  same local file paths for existing PWA image references.
+- Tightened draw-page meal action focus handling so tap/click actions release
+  the visual pressed state after reroll, add, combo, remove, and remove-dish
+  actions.
+- Hid the `昨天的剩菜` top-right entry outside the home screen.
+- Changed the `5分哲理` page to use a shuffled round bag: every motto appears
+  once before the next shuffled round begins.
+- Bumped app version from `2026.08.29.7` to `2026.08.29.8` for update detection
+  and dish-cache cache busting.
+
 ## 2026-08-29 - Codex - published 2026.08.29.7 timer and leftovers polish
 
 Files changed:

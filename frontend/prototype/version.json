@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2026.08.29.7",
-  "releasedAt": "2026-08-29T02:25:00+08:00",
-  "notes": "Polishes menu combination rows, draw spacing, timer layout, and leftover history fallback."
+  "version": "2026.08.29.8",
+  "releasedAt": "2026-08-29T03:12:00+08:00",
+  "notes": "Compresses local dish images, tightens draw action focus handling, hides leftovers outside home, and cycles mottos by full rounds."
 }

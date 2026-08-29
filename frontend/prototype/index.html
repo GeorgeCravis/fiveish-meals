@@ -2236,8 +2236,22 @@
       color: var(--bg);
     }
 
+    .meal-action-btn:focus:not(:focus-visible) {
+      border-color: var(--border-soft);
+      background: var(--surface);
+      color: var(--fg);
+    }
+
     .meal-action-btn:active {
       transform: translateY(1px) scale(.97);
+    }
+
+    @media (hover: none) {
+      .meal-action-btn:hover {
+        border-color: var(--border-soft);
+        background: var(--surface);
+        color: var(--fg);
+      }
     }
 
     .meal-action-btn.is-danger {
@@ -4792,6 +4806,8 @@ Pages 来源：GitHub Actions
       disabledDishIds: [],
       disabledMenuIds: [],
       activeMotto: "",
+      mottoBag: [],
+      mottoSeen: [],
       timerDurationMs: 300000,
       timerRemainingMs: 300000,
       timerRunning: false,
@@ -4830,7 +4846,7 @@ Pages 来源：GitHub Actions
     const updateBannerText = document.getElementById("updateBannerText");
     const updateNowBtn = document.getElementById("updateNowBtn");
     const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
-    const APP_VERSION = "2026.08.29.7";
+    const APP_VERSION = "2026.08.29.8";
     const VERSION_URL = "version.json";
     const DISH_CACHE_SW_URL = "dish-cache-sw.js";
     const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000;
@@ -5556,14 +5572,40 @@ Pages 来源：GitHub Actions
       return state.currentMotto || summaryMottos[0];
     }
 
+    function shuffledMottos(seed = `${Date.now()}:${Math.random()}`) {
+      const items = [...summaryMottos];
+      for (let index = items.length - 1; index > 0; index -= 1) {
+        const swapIndex = seededIndex(`${seed}:${index}`, index + 1);
+        [items[index], items[swapIndex]] = [items[swapIndex], items[index]];
+      }
+      return items;
+    }
+
+    function markMottoSeen(motto) {
+      if (motto && !state.mottoSeen.includes(motto)) state.mottoSeen.push(motto);
+    }
+
+    function refillMottoBag() {
+      const seen = new Set(state.mottoSeen);
+      const remaining = summaryMottos.filter((motto) => !seen.has(motto));
+      state.mottoBag = shuffledMottos().filter((motto) => remaining.includes(motto));
+      if (!state.mottoBag.length) {
+        state.mottoSeen = [];
+        state.mottoBag = shuffledMottos();
+      }
+    }
+
     function randomMotto(exclude = "") {
       if (summaryMottos.length <= 1) return summaryMottos[0] || "";
-      let next = exclude;
-      let attempts = 0;
-      while (next === exclude && attempts < 8) {
-        next = summaryMottos[Math.floor(Math.random() * summaryMottos.length)];
-        attempts += 1;
+      markMottoSeen(exclude);
+      if (!state.mottoBag.length) {
+        refillMottoBag();
+        if (state.mottoBag[0] === exclude && state.mottoBag.length > 1) {
+          state.mottoBag.push(state.mottoBag.shift());
+        }
       }
+      const next = state.mottoBag.shift();
+      markMottoSeen(next);
       return next;
     }
 
@@ -5584,6 +5626,13 @@ Pages 来源：GitHub Actions
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
+    }
+
+    function releasePressedButton(button) {
+      button?.blur();
+      window.setTimeout(() => {
+        if (document.activeElement === button) button.blur();
+      }, 0);
     }
 
     function dishImagePath(item) {
@@ -5819,13 +5868,13 @@ Pages 来源：GitHub Actions
       }).join("");
       summaryGrid.querySelectorAll("[data-reroll-meal]").forEach((button) => {
         button.addEventListener("click", () => {
-          button.blur();
+          releasePressedButton(button);
           rerollMeal(button.dataset.rerollMeal);
         });
       });
       summaryGrid.querySelectorAll("[data-open-tray]").forEach((button) => {
         button.addEventListener("click", () => {
-          button.blur();
+          releasePressedButton(button);
           const mealId = button.dataset.openTray;
           const mode = button.dataset.trayMode;
           const isSame = state.activeTray?.mealId === mealId && state.activeTray?.mode === mode;
@@ -5838,13 +5887,13 @@ Pages 来源：GitHub Actions
       });
       summaryGrid.querySelectorAll("[data-toggle-remove]").forEach((button) => {
         button.addEventListener("click", () => {
-          button.blur();
+          releasePressedButton(button);
           toggleRemoveMode(button.dataset.toggleRemove);
         });
       });
       summaryGrid.querySelectorAll("[data-remove-dish]").forEach((button) => {
         button.addEventListener("click", () => {
-          button.blur();
+          releasePressedButton(button);
           removeDishFromMeal(button.dataset.removeDish, button.dataset.dishIndex);
         });
       });
@@ -6205,6 +6254,8 @@ Pages 来源：GitHub Actions
       });
       const backBtn = document.getElementById("backBtn");
       if (backBtn) backBtn.hidden = id === "home";
+      const leftoversBtn = document.getElementById("openLeftoversBtn");
+      if (leftoversBtn) leftoversBtn.hidden = id !== "home";
       if (push && state.history[state.history.length - 1] !== id) state.history.push(id);
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
     }
